@@ -1,0 +1,8 @@
+*** Settings ***
+Library  SeleniumLibrary
+Library  Pdf2TextLibrary
+
+*** Tasks ***
+joo
+    ${haa}  Convert Pdf To Txt    ${CURDIR}/sample.pdf
+    Log  ${haa}
