@@ -5,6 +5,8 @@ Library  Pdf2TextLibrary
 Library  String
 *** Tasks ***
 
+
+
 PDF
 
     ${teksti}  Hae Teksti PDF Tiedostosta    ${CURDIR}/Resources/DNA_lasku_1.pdf    Maksettava yhteensä EUR    Verokantaerittely
