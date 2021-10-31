@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.robotframework.ide.eclipse.main.plugin.robotNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>libspecs/String.py</name>
-			<type>1</type>
-			<location>/home/jukka/.local/lib/python3.8/site-packages/robot/libraries/String.py</location>
-		</link>
-	</linkedResources>
 </projectDescription>

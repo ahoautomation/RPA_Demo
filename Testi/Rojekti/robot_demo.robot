@@ -1,11 +1,12 @@
 *** Settings ***
 
-Library  SeleniumLibrary
-Library  Pdf2TextLibrary
-Library  String
-Library  OperatingSystem
-
-Suite Setup       Alusta Ajo
+Library    SeleniumLibrary
+Library    Pdf2TextLibrary
+Library    String
+Library    OperatingSystem
+Library    DatabaseLibrary
+Suite Setup       Ajon Alustus
+Suite Teardown       Ajon Lopetus
 *** Tasks ***
 
 
@@ -47,6 +48,16 @@ Hae Teksti PDF Tiedostosta
     [return]    ${teksti}
     
 
-Alusta Ajo
+Ajon Alustus
     Remove File    ${CURDIR}/Resources/Processed/*
     Remove File    ${CURDIR}/Resources/Not_Processed/*
+    Alusta Tietokanta
+    
+Ajon Lopetus
+    Disconnect From Database
+    
+Alusta Tietokanta
+    Connect To Database    pymysql    example_database    robot    robot123    127.0.0.1     3306
+    Execute SQL String    DROP TABLE IF EXISTS laskut;
+    Execute SQL String    CREATE TABLE example_database.laskut (lasku_id INT AUTO_INCREMENT,tiedostonimi VARCHAR(255),summa DECIMAL(5,2),tila BOOLEAN,PRIMARY KEY(lasku_id));
+
