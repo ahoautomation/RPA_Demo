@@ -6,6 +6,9 @@
     <referencedLibrary type="PYTHON" name="SeleniumLibrary" path="/home/jukka/.local/lib/python3.8/site-packages/SeleniumLibrary/__init__.py" dynamic="false"/>
     <referencedLibrary type="PYTHON" name="Pdf2TextLibrary" path="/home/jukka/.local/lib/python3.8/site-packages/Pdf2TextLibrary/__init__.py" dynamic="false"/>
     <referencedLibrary type="PYTHON" name="DatabaseLibrary" path="/home/jukka/.local/lib/python3.8/site-packages/DatabaseLibrary/__init__.py" dynamic="false"/>
+    <referencedLibrary type="PYTHON" name="DatabaseLibrary" path="/home/robot/.local/lib/python3.8/site-packages/DatabaseLibrary/__init__.py" dynamic="false"/>
+    <referencedLibrary type="PYTHON" name="Pdf2TextLibrary" path="/home/robot/.local/lib/python3.8/site-packages/Pdf2TextLibrary/__init__.py" dynamic="false"/>
+    <referencedLibrary type="PYTHON" name="SeleniumLibrary" path="/home/robot/.local/lib/python3.8/site-packages/SeleniumLibrary/__init__.py" dynamic="false"/>
     <pythonpath/>
     <classpath/>
     <excludedForValidation/>
