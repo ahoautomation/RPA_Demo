@@ -1,3 +1,12 @@
+*** Settings ***
+
+Library    SeleniumLibrary
+Library    Pdf2TextLibrary
+Library    String
+Library    OperatingSystem
+Library    DatabaseLibrary
+
+
 *** Keywords ***
 
 

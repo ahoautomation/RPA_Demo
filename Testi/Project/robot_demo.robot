@@ -1,11 +1,6 @@
 *** Settings ***
 Resource    ./Resources/keywords.robot
 
-Library    SeleniumLibrary
-Library    Pdf2TextLibrary
-Library    String
-Library    OperatingSystem
-Library    DatabaseLibrary
 Suite Setup       Ajon Alustus
 Suite Teardown       Ajon Lopetus
 
