@@ -1,12 +1,3 @@
-
- <script type="text/javascript">
-  setTimeout(function(){
-    location = ''
-  },100000)
-</script>
-
-
-
 <?php
 $user = "robot";
 $password = "robot123";
@@ -45,11 +36,11 @@ span.td
 
 ";
 
+try
+{
+    $db = new PDO("mysql:host=localhost;dbname=$database", $user, $password);
 
-try {
-  $db = new PDO("mysql:host=localhost;dbname=$database", $user, $password);
-  
-    echo "<h3>Laskujen manuaalinen käsittely</h3>
+    echo "<h3>Laskujen syöttö</h3>
 <form method='post' action='#'>
   Lasku_ID:
   <input type='text' name='ID'>
@@ -63,77 +54,88 @@ try {
 </form>
 <br><br>
 <br>
-  "
-  ;
-$ID=$_POST['ID'];
-$tiedostonimi=$_POST['tiedostonimi'];
-$summa=$_POST['summa'];
+  ";
+  
+    # strip_tags() - Strip HTML and PHP tags from a string
+    # https://www.php.net/manual/en/function.strip-tags.php
+  
+    # htmlspecialchars() - Convert special characters to HTML entities
+    # Example: & (ampersand)	=>	&amp;
+    # https://www.php.net/manual/en/function.htmlspecialchars.php
+    
+    $ID = htmlspecialchars(strip_tags($_POST['ID']));
+    $tiedostonimi = htmlspecialchars(strip_tags($_POST['tiedostonimi']));
+    $summa = htmlspecialchars(strip_tags($_POST['summa']));
 
+    if (isset($_POST['ID'], $_POST['tiedostonimi'], $_POST['summa']) && is_numeric($_POST['ID']) && $_POST['ID'] > 0)
+    {
+        $sql = "DELETE FROM $table WHERE lasku_id=$ID";
+        # calling PDO::prepare() and PDOStatement::execute() helps to prevent SQL injection attacks by eliminating the need to manually quote and escape the parameters. 
+        # https://www.php.net/manual/en/pdo.prepare.php
+        $result = $db->prepare($sql)->execute();
 
+        $sql = "INSERT INTO $table (lasku_id, tiedostonimi, summa, tila) VALUES (?,?,?,?)";
+        $result = $db->prepare($sql)->execute([$ID, $tiedostonimi, $summa, 'OK']);
+    }
 
-
-if(isset($_POST['ID'], $_POST['tiedostonimi'], $_POST['summa']) && is_numeric( $_POST['ID'] ) && $_POST['ID'] > 0) {
-$sql = "DELETE FROM $table WHERE lasku_id=$ID";
-$result = $db->prepare($sql)->execute();
-
-$sql = "INSERT INTO $table (lasku_id, tiedostonimi, summa, tila) VALUES (?,?,?,?)";
-$result = $db->prepare($sql)->execute([$ID, $tiedostonimi, $summa, 'OK']);
-  }
-
-
-  echo "
+    echo "
 
   <table>
   <tr>
     <th colspan='3'>Käsitellyt laskut</th>
   </tr>
   <tr>
-    <th>Lasku_ID</th>
+    <th>Lasku ID</th>
     <th>Tiedostonimi</th>
     <th>Summa €</th>
   </tr>";
-  foreach($db->query("SELECT * FROM $table WHERE tila='OK'") as $row) {
- 
-    echo "<tr><td>" . $row['lasku_id'] . "</td><td>".$row['tiedostonimi'] ."</td><td>".$row['summa']."</td></tr>";
-  }
-  $sql = "SELECT  SUM(summa) AS summa FROM example_database.laskut WHERE tila='OK'";
-  $result = $db->query($sql);
+    foreach ($db->query("SELECT * FROM $table WHERE tila='OK'") as $row)
+    {
 
+        echo "<tr><td>" . htmlspecialchars(strip_tags($row['lasku_id'])) . "</td><td>" . htmlspecialchars(strip_tags($row['tiedostonimi'])) . "</td><td>" . htmlspecialchars(strip_tags($row['summa'])) . "</td></tr>";
+    }
+    $sql = "SELECT  SUM(summa) AS summa FROM example_database.laskut WHERE tila='OK'";
+    $result = $db->query($sql);
 
-$row = $result->fetch(PDO::FETCH_ASSOC);
-  echo "<tr>
+    $row = $result->fetch(PDO::FETCH_ASSOC);
+    echo "<tr>
   
   <th colspan='2'> Yhteensä:</th>
-    <th> " .  $row['summa'] . "</th>
+    <th> " . $row['summa'] . "</th>
   </tr>";
-      
-  echo "</table>";
+
+    echo "</table><br>";
 
 
-  echo "<br>";
+    # Käsittelemättömät laskut -taulu näytetään vain, jos käsittelemättömiä laskuja löytyy tietokannasta.
+    $sql = $db->prepare("SELECT * FROM $table WHERE tila='Virhe!'");
+    $sql->execute();
+    if ($sql->rowCount() > 0)
+    {
 
-  echo "<table>
+        echo "<table>
   <tr>
     <th colspan='3'>Käsittelemättömät laskut</th>
   </tr>
   <tr>
-    <th>Lasku_ID</th>
+    <th>Lasku ID</th>
     <th>Tiedostonimi</th>
    <th>Epäonnistumisen syy</th>
   </tr>";
-  foreach($db->query("SELECT * FROM $table WHERE tila='Virhe!'") as $row) {
- 
-    echo "<tr><td>" . $row['lasku_id'] . "</td><td>".$row['tiedostonimi'] ."</td><td>PDF luku epäonnistui</td></tr>";
-  }
+        foreach ($db->query("SELECT * FROM $table WHERE tila='Virhe!'") as $row)
+        {
 
-      
-  echo "</table>";
+            echo "<tr><td>" . htmlspecialchars(strip_tags($row['lasku_id'])) . "</td><td>" . htmlspecialchars(strip_tags($row['tiedostonimi'])) . "</td><td>PDF luku epäonnistui</td></tr>";
+        }
 
+        echo "</table>";
 
+    }
 
-} catch (PDOException $e) {
-    echo "Tietokantavirhe!: " . $e->getMessage() . "<br/>";
+}
+catch(PDOException $e)
+{
+    echo "Sivun käsittelyssä tapahtui virhe!";
     die();
 }
-
 

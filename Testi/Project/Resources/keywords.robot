@@ -6,11 +6,7 @@ Library    String
 Library    OperatingSystem
 Library    DatabaseLibrary
 
-
 *** Keywords ***
-
-
-
 
 Hae Teksti väliltä
     [Arguments]    ${teksti}    ${alku}    ${loppu}
@@ -27,13 +23,13 @@ Hae Teksti PDF Tiedostosta
     ${apu}    ${teksti}    Run Keyword And Ignore Error    Hae Teksti väliltä    ${teksti}    Maksettava yhteensä EUR    Verokantaerittely
     Return From Keyword If    '${apu}'=='FAIL'    ${EMPTY}
     [return]    ${teksti}
-  
-
 
 Ajon Alustus
     Remove File    ${CURDIR}/Processed/*
     Remove File    ${CURDIR}/Not_Processed/*
     Alusta Tietokanta
+    Open Browser	http://localhost/laskut.php    FireFox
+    Log To console    ${EMPTY}
     
 Ajon Lopetus
     Disconnect From Database

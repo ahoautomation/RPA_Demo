@@ -9,6 +9,9 @@
     <referencedLibrary type="PYTHON" name="DatabaseLibrary" path="/home/robot/.local/lib/python3.8/site-packages/DatabaseLibrary/__init__.py" dynamic="false"/>
     <referencedLibrary type="PYTHON" name="Pdf2TextLibrary" path="/home/robot/.local/lib/python3.8/site-packages/Pdf2TextLibrary/__init__.py" dynamic="false"/>
     <referencedLibrary type="PYTHON" name="SeleniumLibrary" path="/home/robot/.local/lib/python3.8/site-packages/SeleniumLibrary/__init__.py" dynamic="false"/>
+    <referencedLibrary type="PYTHON" name="DocTest.PdfTest" path="/usr/local/lib/python3.8/dist-packages/DocTest/PdfTest.py" dynamic="false"/>
+    <referencedLibrary type="PYTHON" name="DocTest" path="/usr/local/lib/python3.8/dist-packages/DocTest/__init__.py" dynamic="false"/>
+    <referencedLibrary type="PYTHON" name="DocTest.VisualTest" path="/usr/local/lib/python3.8/dist-packages/DocTest/VisualTest.py" dynamic="false"/>
     <pythonpath/>
     <classpath/>
     <excludedForValidation/>
