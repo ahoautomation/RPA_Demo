@@ -13,11 +13,11 @@ table, th, td {
     vertical-align: middle;
 }
 body {
-  background-image: url('robot.jpg');
+  background-image: url('robo.jpg');
    background-repeat: no-repeat;
    background-attachment: fixed;
    background-position: right;
-   background-size: 300px 300px;
+   background-size: 100% 100%;
 }
 div.table 
 {
@@ -32,7 +32,7 @@ span.td
     display:table-cell;
 }
 </style>
-<title>Laskut</title>
+<title>Järjestelmä B - Laskut</title>
 
 ";
 
@@ -40,20 +40,24 @@ try
 {
     $db = new PDO("mysql:host=localhost;dbname=$database", $user, $password);
 
-    echo "<h3>Laskujen syöttö</h3>
+    echo "<h1>Järjestelmä B</h1><br><h3>Laskujen syöttö</h3>
 <form method='post' action='#'>
   Lasku_ID:
+   <br>
   <input type='text' name='ID'>
-  
+  <br>
   Tiedostonimi:
+   <br>
   <input type='text' name='tiedostonimi'>
-  
+  <br>
   Summa €:
+   <br>
   <input type='text' name='summa'>
+  <br> <br>
   <input type='submit' value='Tallenna'>
 </form>
 <br><br>
-<br>
+
   ";
   
     # strip_tags() - Strip HTML and PHP tags from a string
@@ -115,7 +119,7 @@ try
 
         echo "<table>
   <tr>
-    <th colspan='3'>Käsittelemättömät laskut</th>
+    <th colspan='3'>Laskut, joiden käsittelyssä tapahtui virhe</th>
   </tr>
   <tr>
     <th>Lasku ID</th>

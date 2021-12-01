@@ -9,19 +9,17 @@ Task Teardown       Ajon Lopetus
 *** Tasks ***
 
 Laskujen käsittely
-    Sleep    3s
-    ${files}    List Files In Directory    ${CURDIR}/Resources/Incoming
+    Sleep    3s    #Lisätty viivettä, jotta demoa ehtii seurata silmämääräisesti
+    ${files}    List Files In Directory    ${CURDIR}/Resources/Jarjestelma_A    # Haetaan käsiteltävien laskujen tiedostonimet muuttujaan  
     Log    ${files}
-    FOR    ${file}    IN    @{files}
+    FOR    ${file}    IN    @{files}    # Käsitellään jokainen lasku peräjälkeen
            Log To Console    Käsitellään tiedostoa ${file}
-           ${summa}  Hae Teksti PDF Tiedostosta    ${CURDIR}/Resources/Incoming/${file}    Maksettava yhteensä EUR    Verokantaerittely
-           Log    ${summa}
-           ${passed}    Run Keyword And Return Status    Should Match Regexp    ${summa}    \\d+,\\d+
-           Log    ${passed}
-           Run Keyword If	'${passed}' == 'True'	Prosessoi Validi Lasku    ${file}    ${summa}
-           Run Keyword If	'${passed}' == 'False'	Prosessoi Epävalidi Lasku    ${file}
-           Reload Page
-           Sleep    1s
+           ${summa}  Hae Laskun Summa    ${CURDIR}/Resources/Jarjestelma_A/${file}
+           ${passed}    Run Keyword And Return Status    Should Match Regexp    ${summa}    \\d+,\\d+    # Tarkistetaan onnistuiko summan poimiminen laskulta 
+           Run Keyword If	'${passed}' == 'True'	Käsittele Validi Lasku    ${file}    ${summa}    # Tallennetaan tieto onnistuneesta poiminnasta Järjestelmä Bn tietokantaan
+           Run Keyword If	'${passed}' == 'False'	Käsittele Epävalidi Lasku    ${file}    # Tallennetaan tieto epäonnistuneesta poiminnasta Järjestelmä Bn tietokantaan
+           Reload Page    # Päivitetään Järjestelmä Bn käyttöliittymä, jolloin päivittyneet tiedot haetaan tietokannasta
+           Sleep    1s    # Lisätty viivettä, jotta demoa ehtii seurata silmämääräisesti
     END
       
 
