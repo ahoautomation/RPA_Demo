@@ -1,13 +1,9 @@
 *** Settings ***
-
 Resource    ./Resources/keywords.robot
 Task Setup       Ajon Alustus
 Task Teardown       Ajon Lopetus
 
-
-
 *** Tasks ***
-
 Laskujen käsittely
     Sleep    3s    #Lisätty viivettä, jotta demoa ehtii seurata silmämääräisesti
     ${files}    List Files In Directory    ${CURDIR}/Resources/Jarjestelma_A    # Haetaan käsiteltävien laskujen tiedostonimet muuttujaan  

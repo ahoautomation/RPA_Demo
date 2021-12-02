@@ -1,5 +1,4 @@
 *** Settings ***
-
 Library    String             # Robotin sisäinen kirjasto tekstijonojen käsittelyyn
 Library    OperatingSystem    # Robotin sisäinen kirjasto tiedostojen käsittelyyn
 Library    SeleniumLibrary    # Ulkoinen kirjasto selaimen hallintaa varten
@@ -7,7 +6,6 @@ Library    Pdf2TextLibrary    # Ulkoinen kirjasto tekstin lukuun PDF-tiedostosta
 Library    DatabaseLibrary    # Ulkoinen kirjasto tietokantojen käsittelyyn
 
 *** Keywords ***
-
 Hae Teksti väliltä
     [Documentation]    Palauttaa kahden merkkijonon väliin jäävän merkkijonon
     [Arguments]    ${teksti}    ${alku}    ${loppu}
